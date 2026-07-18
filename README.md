@@ -13,7 +13,8 @@ your fans. No frameworks, no build step, no database, no admin UI, and no server
   setup and launch, step by step.
 - **On your own** — just follow [`SETUP.md`](SETUP.md); everything is documented.
 
-**Open source** — free to use, fork, and customize into your own version.
+**Open source** — free to use, fork, and customize into your own version. Licensed under the
+[MIT License](LICENSE).
 
 **Features**
 
