@@ -378,7 +378,7 @@
     (dl.files || []).forEach(function (f) {
       var li = el('li');
       var link = el('a', 'btn', f.label);
-      link.href = f.url;
+      link.href = window.MRUtil.safeHref(f.url);
       link.setAttribute('download', '');
       li.appendChild(link);
       list.appendChild(li);
@@ -387,7 +387,7 @@
       var li = el('li');
       var bundle = el('a', 'btn btn-primary',
         'Download all (ZIP' + (dl.format ? ' — ' + dl.format.toUpperCase() : '') + ')');
-      bundle.href = dl.bundleUrl;
+      bundle.href = window.MRUtil.safeHref(dl.bundleUrl);
       bundle.setAttribute('download', '');
       li.appendChild(bundle);
       list.appendChild(li);

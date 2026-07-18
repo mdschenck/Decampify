@@ -4,11 +4,13 @@
  * body: { releaseId, amount, format }   format = "wav" | "mp3", amount in USD
  *
  * Validates the release against data/releases.json and enforces its price
- * model server-side (the client also enforces it, but the server is the
- * authority — a hand-crafted request cannot underpay):
- *   nyp-floor / fixed : amount >= priceFloor, else 400
- *   nyp               : amount >= 0; amount === 0 → free path
- *   free              : always free path
+ * model server-side via _lib/pricing.js resolvePricing() (the client also
+ * enforces it, but the server is the authority — a hand-crafted request
+ * cannot underpay):
+ *   nyp-floor : amount >= priceFloor, else 400
+ *   fixed     : amount === priceFloor exactly, else 400
+ *   nyp       : amount >= 0; amount === 0 → free path
+ *   free      : always free path
  *
  * Paid → Stripe Checkout Session (mode: payment), responds { url }.
  *        Success returns the buyer to the home page with
@@ -21,6 +23,7 @@
  * Graceful degradation: missing env vars → clear JSON 501, never a 500.
  * ========================================================================== */
 import { getRelease } from "./_lib/data.js";
+import { resolvePricing } from "./_lib/pricing.js";
 import { getStripe, stripeReady } from "./_lib/stripe.js";
 import { signToken, tokenReady } from "./_lib/token.js";
 
@@ -65,23 +68,10 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "amount must be a number between 0 and " + MAX_AMOUNT_USD + "." });
   }
 
-  // --- Enforce the release's price model ---------------------------------
-  const model = release.priceModel; // "nyp-floor" | "nyp" | "fixed" | "free"
-  const floor = Number(release.priceFloor) || 0;
-  let isFree = false;
-  if (model === "free") {
-    isFree = true;
-  } else if (model === "nyp") {
-    isFree = amount === 0;
-  } else if (model === "nyp-floor" || model === "fixed") {
-    if (amount < floor) {
-      return res.status(400).json({
-        error: "Minimum price for this release is $" + floor.toFixed(2) + ".",
-      });
-    }
-  } else {
-    return res.status(400).json({ error: "Release has an unknown price model." });
-  }
+  // --- Enforce the release's price model (see _lib/pricing.js) -----------
+  const pricing = resolvePricing(release, amount);
+  if (pricing.error) return res.status(400).json({ error: pricing.error });
+  const isFree = pricing.free === true;
 
   // --- FREE path: HMAC token, no Stripe ----------------------------------
   if (isFree) {
@@ -135,9 +125,11 @@ export default async function handler(req, res) {
     });
     return res.status(200).json({ url: session.url });
   } catch (err) {
-    // Stripe/API failure — surface a clean JSON error, not a 500 stack dump.
+    // Stripe/API failure — log the details server-side, return a generic
+    // message (never echo err.message to the client).
+    console.error("create-checkout: Stripe session create failed:", err);
     return res.status(502).json({
-      error: "Could not create checkout session: " + (err && err.message ? err.message : "unknown error"),
+      error: "Could not create checkout session. Please try again.",
     });
   }
 }

@@ -323,17 +323,17 @@
     var actions = el('div', 'connect-actions');
     if (cfg.emailFormUrl) {  // Google Form link — never embedded as an iframe
       var mail = extLink(el('a', 'btn btn-primary', 'Join the email list'));
-      mail.href = cfg.emailFormUrl;
+      mail.href = window.MRUtil.safeHref(cfg.emailFormUrl);
       actions.appendChild(mail);
     }
     if (cfg.merchUrl) {      // merch shop
       var merch = extLink(el('a', 'btn', 'Merch'));
-      merch.href = cfg.merchUrl;
+      merch.href = window.MRUtil.safeHref(cfg.merchUrl);
       actions.appendChild(merch);
     }
     if (cfg.bandcampUrl) {
       var bc = extLink(el('a', 'btn', 'Bandcamp'));
-      bc.href = cfg.bandcampUrl;
+      bc.href = window.MRUtil.safeHref(cfg.bandcampUrl);
       actions.appendChild(bc);
     }
     body.appendChild(actions);
@@ -365,7 +365,7 @@
     Object.keys(socials).forEach(function (k) {
       if (!socials[k]) return;
       var a = extLink(el('a', null, labels[k] || k));
-      a.href = socials[k];
+      a.href = window.MRUtil.safeHref(socials[k]);
       container.appendChild(a);
     });
   }

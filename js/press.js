@@ -161,7 +161,7 @@
     if (item.url) {
       var link = document.createElement("a");
       link.className = "btn";
-      link.href = item.url;
+      link.href = window.MRUtil.safeHref(item.url);
       link.target = "_blank";
       link.rel = "noopener";
       /* Label by type: video -> Watch, everything else -> Read */
@@ -184,7 +184,7 @@
     if (!nav || !cfg || !cfg.socials) return;
     Object.keys(cfg.socials).forEach(function (key) {
       var a = document.createElement("a");
-      a.href = cfg.socials[key];
+      a.href = window.MRUtil.safeHref(cfg.socials[key]);
       a.target = "_blank";
       a.rel = "noopener";
       a.textContent = SOCIAL_LABELS[key] || key;

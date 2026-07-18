@@ -157,7 +157,7 @@
         var li = document.createElement("li");
         var a = document.createElement("a");
         a.className = "btn";
-        a.href = link.url;
+        a.href = window.MRUtil.safeHref(link.url);
         a.target = "_blank";
         a.rel = "noopener";
         a.textContent = link.label || link.url;
@@ -180,7 +180,7 @@
     if (!nav || !cfg || !cfg.socials) return;
     Object.keys(cfg.socials).forEach(function (key) {
       var a = document.createElement("a");
-      a.href = cfg.socials[key];
+      a.href = window.MRUtil.safeHref(cfg.socials[key]);
       a.target = "_blank";
       a.rel = "noopener";
       a.textContent = SOCIAL_LABELS[key] || key;

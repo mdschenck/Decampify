@@ -34,3 +34,10 @@ window.MR_CONFIG = {
     youtube: "https://example.com/your-youtube"        // ← replace
   }
 };
+
+/*
+ * Shared helpers. safeHref() sanitizes any data/config-derived URL before it
+ * is assigned to an element's href — only http(s): and mailto: schemes pass;
+ * anything else (javascript:, data:, relative junk) becomes an inert "#".
+ */
+window.MRUtil = { safeHref: function (u) { u = (typeof u === 'string' ? u.trim() : ''); return /^(https?:|mailto:)/i.test(u) ? u : '#'; } };

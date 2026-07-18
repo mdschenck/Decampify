@@ -40,8 +40,11 @@ export default async function handler(req, res) {
     const url = await signGet(key, URL_EXPIRY_SEC);
     return res.status(200).json({ url });
   } catch (err) {
+    // R2 signing failure — log the details server-side, return a generic
+    // message (never echo err.message to the client).
+    console.error("stream-url: signing stream URL failed:", err);
     return res.status(502).json({
-      error: "Could not sign stream URL: " + (err && err.message ? err.message : "unknown error"),
+      error: "Could not prepare the stream. Please try again.",
     });
   }
 }

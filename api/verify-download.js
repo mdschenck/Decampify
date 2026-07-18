@@ -107,8 +107,11 @@ export default async function handler(req, res) {
     const payloadOut = await buildFileResponse(release, format);
     return res.status(200).json(payloadOut);
   } catch (err) {
+    // R2 signing failure — log the details server-side, return a generic
+    // message (never echo err.message to the client).
+    console.error("verify-download: signing download URLs failed:", err);
     return res.status(502).json({
-      error: "Could not sign download URLs: " + (err && err.message ? err.message : "unknown error"),
+      error: "Could not prepare your download. Please try again.",
     });
   }
 }

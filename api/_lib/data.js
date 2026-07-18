@@ -27,7 +27,8 @@ export function loadData() {
   let lastErr;
   for (const p of candidates) {
     try {
-      cache = JSON.parse(readFileSync(p, "utf8"));
+      // Strip a UTF-8 BOM if present (Windows editors add one; JSON.parse rejects it).
+      cache = JSON.parse(readFileSync(p, "utf8").replace(/^﻿/, ""));
       return cache;
     } catch (err) {
       lastErr = err;
