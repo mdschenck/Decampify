@@ -113,9 +113,11 @@ can genuinely need several attempts:
 UPLOAD_CONCURRENCY=1 UPLOAD_QUEUE_SIZE=1 UPLOAD_ATTEMPTS=8 npm run upload
 ```
 
-Uploading needs a **write-scoped** R2 token — the site's own token is read-only by design. Put the
-write credentials in `.env.upload` (git-ignored) as `R2_UPLOAD_ACCESS_KEY_ID` /
-`R2_UPLOAD_SECRET_ACCESS_KEY`, and delete that token in Cloudflare once you are done. See SETUP.md.
+Uploading needs a **write-scoped** R2 token — the site's own token is read-only by design, so it
+cannot upload at all. Copy **[`.env.upload.example`](.env.upload.example)** to `.env.upload`
+(git-ignored) and paste in a fresh Object Read & Write token; that file also documents the optional
+staging-folder and retry settings. Delete the token in Cloudflare once you are done — it can
+overwrite and delete everything in the bucket, so treat it as disposable. See SETUP.md.
 
 ## Tests
 
