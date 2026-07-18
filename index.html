@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Static Bloom — Electronic, Your City ST</title>
+  <meta name="description" content="Static Bloom — demo artist site for the Decampify template. Stream and buy releases, listen to mixes, join the mailing list. Replace this with your own description.">
+  <meta name="theme-color" content="#f4f4f5">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Shared page shell (BUILD-SPEC §1 — identical on all pages) -->
+  <header class="site-header">
+    <a class="brand" href="/index.html"><img src="/assets/img/logo-horizontal.svg"
+      alt="Static Bloom" class="brand-logo" width="600" height="80"></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="/index.html" aria-current="page">Music</a>
+      <a href="/press.html">Press &amp; Videos</a>
+      <a href="/epk.html">EPK</a>
+    </nav>
+  </header>
+
+  <main class="wrap" id="main">
+
+    <!-- ====================================================================
+         STATIONS PLAYER (js/player.js) — sticky, keeps playing while
+         browsing. Stations are built at runtime from data/releases.json:
+         Shuffle All + one per release + one per mix.
+         ==================================================================== -->
+    <section id="player" class="player" aria-label="Stations player">
+      <div class="player-stations" id="player-stations" role="group" aria-label="Stations">
+        <!-- station chips injected by js/player.js -->
+      </div>
+      <p class="player-now" aria-live="polite">
+        <span class="now-marker" aria-hidden="true">▶</span>
+        <span class="now-title" id="pl-now-title">Pick a station</span>
+        <span class="now-sub" id="pl-now-sub"></span>
+      </p>
+      <div class="player-controls">
+        <button id="pl-prev" class="btn btn-icon" type="button" aria-label="Previous track">◀◀</button>
+        <button id="pl-play" class="btn btn-icon" type="button" aria-label="Play">▶</button>
+        <button id="pl-next" class="btn btn-icon" type="button" aria-label="Next track">▶▶</button>
+        <span class="player-time" id="pl-elapsed">0:00</span>
+        <input id="pl-seek" class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek position">
+        <span class="player-time" id="pl-duration">0:00</span>
+        <button id="pl-shuffle" class="btn btn-icon" type="button" aria-label="Shuffle" aria-pressed="false">SHF</button>
+        <input id="pl-volume" class="volume" type="range" min="0" max="100" value="80" aria-label="Volume">
+      </div>
+      <!-- Visible only in mock mode (MR_CONFIG.mock) -->
+      <p class="demo-note" id="pl-demo-note" hidden>demo audio — real tracks load after upload</p>
+    </section>
+
+    <!-- ====================================================================
+         MUSIC — album grid rendered by js/main.js from data/releases.json.
+         No catalog content is hardcoded here (easy-maintenance mandate §9).
+         ==================================================================== -->
+    <section id="music" aria-labelledby="music-heading">
+      <h2 id="music-heading" class="section-heading">Music</h2>
+      <ul id="album-grid" class="album-grid">
+        <noscript><li>JavaScript is required to load the catalog.</li></noscript>
+      </ul>
+    </section>
+
+    <!-- ====================================================================
+         CONNECT — bio, email list, socials, merch (js/main.js from
+         releases.json artist block + window.MR_CONFIG links).
+         ==================================================================== -->
+    <section id="connect" class="connect" aria-labelledby="connect-heading">
+      <h2 id="connect-heading" class="section-heading">Connect</h2>
+      <div id="connect-body"></div>
+    </section>
+
+  </main>
+
+  <!-- Shared page shell footer (BUILD-SPEC §1) -->
+  <footer class="site-footer">
+    <p>Static Bloom — Electronic, Your City ST</p>
+    <nav class="social" aria-label="Social">
+      <!-- links filled from window.MR_CONFIG.socials by js/main.js -->
+    </nav>
+    <p class="fineprint">© Static Bloom. All rights reserved.</p>
+  </footer>
+
+  <!-- Config first (defines window.MR_CONFIG incl. mock switch), then modules.
+       All defer scripts execute in order after DOM parse. -->
+  <script src="/js/config.js"></script>
+  <script src="/js/player.js" defer></script>
+  <script src="/js/main.js" defer></script>
+  <!-- Store module owned by the store agent; defines window.MRStore.
+       main.js degrades gracefully if it has not loaded yet. -->
+  <script src="/js/store.js" defer></script>
+</body>
+</html>

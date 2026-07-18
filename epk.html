@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EPK — Static Bloom</title>
+  <meta name="description" content="Electronic press kit for Static Bloom — demo artist for the Decampify template. Bio, recent releases, contact, and press assets. Replace this with your own description.">
+  <meta name="theme-color" content="#f4f4f5">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!-- Page-scoped layout only. All shared styling (tokens, .card, .btn, shell)
+       lives in css/style.css and is NOT modified — these rules just lay out
+       the press-kit sections. -->
+  <style>
+    .epk-header{
+      margin-top:calc(var(--gap)*2);
+      padding:var(--gap);
+      border-left:4px solid var(--accent);
+    }
+    .epk-header h1{
+      margin:0 0 6px;
+      font-size:clamp(1.2rem, 3.5vw, 1.8rem);
+    }
+    .epk-tagline{
+      margin:0;
+      font-family:var(--font-display);
+      font-size:.85rem;
+      color:var(--text-dim);
+    }
+    .epk-tagline .epk-genre{ color:var(--text); font-weight:600; }
+    .epk-section{ margin-bottom:calc(var(--gap)*1.5); }
+    .epk-bio{
+      margin:0;
+      max-width:68ch;
+      font-size:.95rem;
+      color:var(--text);
+    }
+    /* Release list: TITLE — label — date rows */
+    .epk-releases{
+      list-style:none;
+      margin:0;
+      padding:0;
+      font-size:.85rem;
+      border-top:1px solid var(--line);
+      font-family:var(--font-display);
+    }
+    .epk-releases li{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:baseline;
+      gap:4px 12px;
+      padding:9px 4px;
+      border-bottom:1px solid var(--line);
+    }
+    .epk-release-title{ color:var(--text); font-weight:600; }
+    .epk-release-label{ color:var(--text-dim); }
+    .epk-release-date{ margin-left:auto; color:var(--text-dim); }
+    .epk-support{
+      list-style:none;
+      margin:0;
+      padding:0;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .epk-support li{
+      padding:.45em .9em;
+      background:var(--bg-elev);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      font-family:var(--font-display);
+      font-size:.82rem;
+    }
+    .epk-contact{
+      padding:var(--gap);
+      display:grid;
+      gap:8px;
+      font-size:.9rem;
+    }
+    .epk-contact p{ margin:0; }
+    .epk-contact .epk-label{
+      font-family:var(--font-display);
+      font-size:.75rem;
+      font-weight:600;
+      color:var(--text-dim);
+      display:block;
+      margin-bottom:2px;
+    }
+    /* Links section: one block per group, links as button chips */
+    .epk-link-group{ margin-bottom:var(--gap); }
+    .epk-link-group h3{
+      margin:0 0 10px;
+      font-size:.85rem;
+      color:var(--text-dim);
+      border-left:3px solid var(--accent-2);
+      padding-left:10px;
+    }
+    .epk-link-list{
+      list-style:none;
+      margin:0;
+      padding:0;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    @media (max-width:640px){
+      .epk-releases li{ padding:8px 2px; }
+      .epk-release-date{ margin-left:0; flex-basis:100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Shared page shell (BUILD-SPEC §1 — identical on all pages) -->
+  <header class="site-header">
+    <a class="brand" href="/index.html"><img src="/assets/img/logo-horizontal.svg"
+      alt="Static Bloom" class="brand-logo" width="600" height="80"></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="/index.html">Music</a>
+      <a href="/press.html">Press &amp; Videos</a>
+      <a href="/epk.html" aria-current="page">EPK</a>
+    </nav>
+  </header>
+
+  <!-- Every section below is filled by js/epk.js from /data/epk.json.
+       Bio edits, new releases, support acts, contact, and links are all
+       JSON edits — never HTML edits (easy-maintenance mandate, BUILD-SPEC §9). -->
+  <main class="wrap" id="main">
+
+    <header id="epk-header" class="card epk-header">
+      <!-- artist / genre / location injected by js/epk.js -->
+    </header>
+
+    <section class="epk-section" aria-labelledby="epk-bio-heading">
+      <h2 id="epk-bio-heading" class="section-heading">Bio</h2>
+      <div id="epk-bio"></div>
+    </section>
+
+    <section class="epk-section" aria-labelledby="epk-releases-heading">
+      <h2 id="epk-releases-heading" class="section-heading">Recent Releases</h2>
+      <ul id="epk-releases" class="epk-releases"></ul>
+    </section>
+
+    <section class="epk-section" aria-labelledby="epk-support-heading">
+      <h2 id="epk-support-heading" class="section-heading">Performance Support</h2>
+      <ul id="epk-support" class="epk-support"></ul>
+    </section>
+
+    <section class="epk-section" aria-labelledby="epk-contact-heading">
+      <h2 id="epk-contact-heading" class="section-heading">Contact &amp; Booking</h2>
+      <div id="epk-contact" class="card epk-contact"></div>
+    </section>
+
+    <section class="epk-section" aria-labelledby="epk-links-heading">
+      <h2 id="epk-links-heading" class="section-heading">Links</h2>
+      <div id="epk-links"></div>
+    </section>
+
+    <noscript><p>JavaScript is required to load the press kit.</p></noscript>
+  </main>
+
+  <!-- Shared page shell footer (BUILD-SPEC §1) -->
+  <footer class="site-footer">
+    <p>Static Bloom — Electronic, Your City ST</p>
+    <nav class="social" aria-label="Social">
+      <!-- links filled from window.MR_CONFIG.socials by js/epk.js -->
+    </nav>
+    <p class="fineprint">© Static Bloom. All rights reserved.</p>
+  </footer>
+
+  <!-- Config first (defines window.MR_CONFIG), then the page module. -->
+  <script src="/js/config.js"></script>
+  <script src="/js/epk.js" defer></script>
+</body>
+</html>

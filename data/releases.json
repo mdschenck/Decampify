@@ -1,0 +1,58 @@
+{
+  "artist": {
+    "name": "Static Bloom",
+    "location": "Your City, ST",
+    "genre": "Electronic",
+    "bio": "Static Bloom is a placeholder artist for this template. Replace this bio with your own: who you are, where you're from, and what your sound is about. Everything on this site renders from the JSON files in /data — edit them and the pages update themselves.",
+    "contactEmail": "hello@example.com"
+  },
+  "releases": [
+    {
+      "id": "first-light-ep",
+      "title": "First Light EP",
+      "year": 2026,
+      "date": "2026-03-01",
+      "art": "/assets/img/covers/first-light-ep.svg",
+      "priceModel": "nyp-floor",
+      "priceFloor": 5.0,
+      "currency": "USD",
+      "bandcampUrl": "https://example.com/album/first-light-ep",
+      "credits": "Demo release — replace with your own credits (composer, mixing, mastering).",
+      "notes": "Demo content. This release shows the \"$5 or more\" (nyp-floor) price model.",
+      "tracks": [
+        { "n": 1, "title": "Dawn Chorus", "duration": "4:12", "streamKey": "stream/first-light-ep/01-dawn-chorus.mp3", "downloadKeys": { "wav": "downloads/first-light-ep/01-dawn-chorus.wav", "mp3": "downloads/first-light-ep/01-dawn-chorus.mp3" } },
+        { "n": 2, "title": "Parallel Lines", "duration": "5:03", "streamKey": "stream/first-light-ep/02-parallel-lines.mp3", "downloadKeys": { "wav": "downloads/first-light-ep/02-parallel-lines.wav", "mp3": "downloads/first-light-ep/02-parallel-lines.mp3" } },
+        { "n": 3, "title": "Afterglow", "duration": "6:20", "streamKey": "stream/first-light-ep/03-afterglow.mp3", "downloadKeys": { "wav": "downloads/first-light-ep/03-afterglow.wav", "mp3": "downloads/first-light-ep/03-afterglow.mp3" } }
+      ],
+      "downloadBundle": { "wav": "downloads/first-light-ep/first-light-ep-wav.zip", "mp3": "downloads/first-light-ep/first-light-ep-mp3.zip" }
+    },
+    {
+      "id": "night-signals",
+      "title": "Night Signals",
+      "year": 2025,
+      "date": "2025-10-10",
+      "art": "/assets/img/covers/night-signals.svg",
+      "priceModel": "nyp",
+      "priceFloor": 0.0,
+      "currency": "USD",
+      "bandcampUrl": "https://example.com/album/night-signals",
+      "credits": "Demo release — replace with your own credits.",
+      "notes": "Demo content. This release shows the name-your-price (nyp) model — $0 / free download allowed.",
+      "tracks": [
+        { "n": 1, "title": "Transmission", "duration": "3:48", "streamKey": "stream/night-signals/01-transmission.mp3", "downloadKeys": { "wav": "downloads/night-signals/01-transmission.wav", "mp3": "downloads/night-signals/01-transmission.mp3" } },
+        { "n": 2, "title": "Static Drift", "duration": "5:15", "streamKey": "stream/night-signals/02-static-drift.mp3", "downloadKeys": { "wav": "downloads/night-signals/02-static-drift.wav", "mp3": "downloads/night-signals/02-static-drift.mp3" } }
+      ],
+      "downloadBundle": { "wav": "downloads/night-signals/night-signals-wav.zip", "mp3": "downloads/night-signals/night-signals-mp3.zip" }
+    }
+  ],
+  "mixes": [
+    {
+      "id": "demo-mix-01",
+      "title": "Demo Mix 01 (Live Set)",
+      "date": "2026-01-01",
+      "art": "/assets/img/covers/demo-mix-01.svg",
+      "streamKey": "stream/mixes/demo-mix-01.mp3",
+      "sourceUrl": "https://example.com/mixes/demo-mix-01"
+    }
+  ]
+}

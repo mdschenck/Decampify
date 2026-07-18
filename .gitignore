@@ -1,0 +1,18 @@
+# Secrets
+.env
+.env.local
+.env*.local
+
+# Deps / build
+node_modules/
+.vercel/
+
+# Audio masters staged locally before R2 upload (never commit large media)
+/_uploads/
+*.wav
+*.flac
+*.aiff
+
+# OS / editor
+.DS_Store
+Thumbs.db

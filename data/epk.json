@@ -1,0 +1,27 @@
+{
+  "artist": "Static Bloom",
+  "genre": "Electronic",
+  "location": "Your City, ST",
+  "bio": "Static Bloom is the demo artist for this template. Replace this paragraph with your real EPK bio — two to four sentences covering your background, your sound, and what makes your live sets or releases distinctive. This entire page renders from data/epk.json; no HTML edits are ever needed.",
+  "recentReleases": [
+    { "title": "First Light EP", "label": "Self-released", "date": "Mar 2026" },
+    { "title": "Night Signals", "label": "Self-released", "date": "Oct 2025" },
+    { "title": "Demo Single", "label": "Example Records", "date": "Jun 2025" }
+  ],
+  "support": ["Demo Artist A", "Demo Artist B", "Demo Artist C"],
+  "contact": {
+    "email": "hello@example.com",
+    "techRider": "Replace with your tech rider — e.g. preferred decks/mixer, monitors, DI boxes."
+  },
+  "links": [
+    { "label": "Bandcamp", "url": "https://example.com/bandcamp", "group": "Music" },
+    { "label": "Spotify", "url": "https://example.com/spotify", "group": "Music" },
+    { "label": "SoundCloud", "url": "https://example.com/soundcloud", "group": "Music" },
+    { "label": "Instagram", "url": "https://example.com/instagram", "group": "Social" },
+    { "label": "Demo Press Feature", "url": "https://example.com/press/meet-static-bloom", "group": "Press" },
+    { "label": "Demo Live Set Video", "url": "https://example.com/watch/demo-live-set", "group": "Video" },
+    { "label": "Demo Mix 01", "url": "https://example.com/mixes/demo-mix-01", "group": "Mixes" },
+    { "label": "Promo Photos (replace)", "url": "https://example.com/assets/photos", "group": "Assets" },
+    { "label": "Logo Files (replace)", "url": "https://example.com/assets/logos", "group": "Assets" }
+  ]
+}

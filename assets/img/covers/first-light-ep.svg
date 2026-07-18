@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 700" role="img" aria-label="First Light EP placeholder cover">
+  <!-- Placeholder cover art (light theme, monochrome). Replace with a real
+       1:1 image at this same path, or a 1400x1400 JPG (update the release's
+       `art` field in data/releases.json accordingly). -->
+  <rect width="700" height="700" fill="#ffffff"/>
+  <rect x="1" y="1" width="698" height="698" fill="none" stroke="#d7d7dc" stroke-width="2"/>
+  <!-- rising-sun arcs -->
+  <g fill="none" stroke="#26262b">
+    <circle cx="350" cy="430" r="220" stroke-width="3"/>
+    <circle cx="350" cy="430" r="170" stroke-width="2.5"/>
+    <circle cx="350" cy="430" r="120" stroke-width="2"/>
+    <circle cx="350" cy="430" r="70" stroke-width="1.5"/>
+  </g>
+  <circle cx="350" cy="430" r="26" fill="#26262b"/>
+  <!-- horizon mask -->
+  <rect x="0" y="452" width="700" height="248" fill="#f4f4f5"/>
+  <line x1="0" y1="452" x2="700" y2="452" stroke="#26262b" stroke-width="3"/>
+  <!-- rays -->
+  <g stroke="#5c5c66" stroke-width="2">
+    <line x1="120" y1="452" x2="90" y2="700"/>
+    <line x1="235" y1="452" x2="220" y2="700"/>
+    <line x1="350" y1="452" x2="350" y2="700"/>
+    <line x1="465" y1="452" x2="480" y2="700"/>
+    <line x1="580" y1="452" x2="610" y2="700"/>
+  </g>
+  <text x="48" y="88" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="44" font-weight="700" fill="#1a1a1a">First Light EP</text>
+  <text x="48" y="126" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="22" fill="#5c5c66">Static Bloom — demo cover</text>
+</svg>

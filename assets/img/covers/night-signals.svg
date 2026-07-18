@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 700" role="img" aria-label="Night Signals placeholder cover">
+  <!-- Placeholder cover art (monochrome, inverted for variety). Replace with a
+       real 1:1 image at this same path, or a 1400x1400 JPG (update the
+       release's `art` field in data/releases.json accordingly). -->
+  <rect width="700" height="700" fill="#26262b"/>
+  <!-- signal waveform rows -->
+  <g stroke="#ffffff" stroke-width="3" fill="none">
+    <polyline points="60,300 140,300 170,240 210,360 240,300 460,300 500,260 540,340 580,300 640,300"/>
+    <polyline points="60,400 180,400 210,370 250,430 280,400 420,400 450,350 490,450 520,400 640,400" opacity="0.65"/>
+    <polyline points="60,500 220,500 250,480 290,520 320,500 480,500 510,470 550,530 580,500 640,500" opacity="0.35"/>
+  </g>
+  <!-- broadcast dot -->
+  <circle cx="350" cy="150" r="14" fill="#ffffff"/>
+  <g fill="none" stroke="#ffffff">
+    <circle cx="350" cy="150" r="40" stroke-width="2" opacity="0.7"/>
+    <circle cx="350" cy="150" r="70" stroke-width="2" opacity="0.4"/>
+    <circle cx="350" cy="150" r="100" stroke-width="2" opacity="0.2"/>
+  </g>
+  <text x="48" y="620" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="44" font-weight="700" fill="#ffffff">Night Signals</text>
+  <text x="48" y="656" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="22" fill="#b9b9c2">Static Bloom — demo cover</text>
+</svg>

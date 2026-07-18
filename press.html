@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Press &amp; Videos — Static Bloom</title>
+  <meta name="description" content="Press features, interviews, and videos from Static Bloom — demo artist for the Decampify template. Replace this with your own description.">
+  <meta name="theme-color" content="#f4f4f5">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!-- Page-scoped layout only. All shared styling (tokens, .card, .btn, shell)
+       lives in css/style.css and is NOT modified — these rules just arrange
+       press cards (image + text row on desktop, stacked on mobile). -->
+  <style>
+    .press-list{
+      list-style:none;
+      margin:0;
+      padding:0;
+      display:grid;
+      gap:var(--gap);
+    }
+    .press-card{
+      display:grid;
+      grid-template-columns:minmax(180px, 300px) 1fr;
+      gap:var(--gap);
+      padding:var(--gap);
+      align-items:start;
+    }
+    .press-media{
+      width:100%;
+      aspect-ratio:16/9;
+      object-fit:cover;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:var(--bg-elev-2);
+    }
+    /* Generated SVG placeholder fills the same slot as a real image */
+    svg.press-media{ height:auto; }
+    .press-card h2{
+      margin:0 0 4px;
+      font-size:.95rem;
+      line-height:1.35;
+    }
+    .press-byline{
+      margin:0 0 10px;
+      font-family:var(--font-display);
+      font-size:.8rem;
+      color:var(--text-dim);
+    }
+    .press-byline .press-source{ color:var(--text); font-weight:600; }
+    .press-summary{
+      margin:0 0 14px;
+      font-size:.9rem;
+      color:var(--text);
+      max-width:62ch;
+    }
+    .press-lede{
+      margin:0 0 var(--gap);
+      color:var(--text-dim);
+      max-width:65ch;
+    }
+    @media (max-width:640px){
+      .press-card{ grid-template-columns:1fr; }  /* stack image over text */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Shared page shell (BUILD-SPEC §1 — identical on all pages) -->
+  <header class="site-header">
+    <a class="brand" href="/index.html"><img src="/assets/img/logo-horizontal.svg"
+      alt="Static Bloom" class="brand-logo" width="600" height="80"></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="/index.html">Music</a>
+      <a href="/press.html" aria-current="page">Press &amp; Videos</a>
+      <a href="/epk.html">EPK</a>
+    </nav>
+  </header>
+
+  <main class="wrap" id="main">
+    <h1 class="section-heading">Press &amp; Videos</h1>
+    <p class="press-lede">Features, interviews, and live sets. New items are added in
+      <code>data/press.json</code> — this page renders itself.</p>
+
+    <!-- js/press.js fills this list with one card per data/press.json item, in order.
+         No press content is hardcoded here (easy-maintenance mandate, BUILD-SPEC §9). -->
+    <ol id="press-list" class="press-list" aria-label="Press and video items">
+      <noscript><li>JavaScript is required to load press items.</li></noscript>
+    </ol>
+  </main>
+
+  <!-- Shared page shell footer (BUILD-SPEC §1) -->
+  <footer class="site-footer">
+    <p>Static Bloom — Electronic, Your City ST</p>
+    <nav class="social" aria-label="Social">
+      <!-- links filled from window.MR_CONFIG.socials by js/press.js -->
+    </nav>
+    <p class="fineprint">© Static Bloom. All rights reserved.</p>
+  </footer>
+
+  <!-- Config first (defines window.MR_CONFIG), then the page module. -->
+  <script src="/js/config.js"></script>
+  <script src="/js/press.js" defer></script>
+</body>
+</html>

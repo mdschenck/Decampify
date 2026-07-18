@@ -1,0 +1,24 @@
+{
+  "items": [
+    {
+      "id": "demo-article-2026-02",
+      "type": "article",
+      "title": "Meet Static Bloom: A Demo Press Feature",
+      "source": "Example Magazine",
+      "date": "2026-02-01",
+      "summary": "This is a placeholder press item. Replace it with a real feature or interview — each object in data/press.json becomes one card on this page. Leave image empty for an auto-generated geometric placeholder.",
+      "url": "https://example.com/press/meet-static-bloom",
+      "image": ""
+    },
+    {
+      "id": "demo-video-2025-11",
+      "type": "video",
+      "title": "Static Bloom — Live Set (Demo Video)",
+      "source": "YouTube",
+      "date": "2025-11-15",
+      "summary": "A placeholder video item. For real videos, set image to a thumbnail URL (e.g. a YouTube hqdefault.jpg) or leave it empty for a generated placeholder.",
+      "url": "https://example.com/watch/demo-live-set",
+      "image": ""
+    }
+  ]
+}
