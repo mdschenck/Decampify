@@ -2,6 +2,8 @@
 .env
 .env.local
 .env*.local
+# Write-scoped R2 token used only by scripts/upload-to-r2.mjs — never commit
+.env.upload
 
 # Deps / build
 node_modules/

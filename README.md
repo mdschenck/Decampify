@@ -89,6 +89,34 @@ Prefer to do it by hand? Everything the skill does is documented below and in **
 the Cloudflare R2 bucket, environment variables, uploading audio (`npm run manifest` generates
 your upload checklist), deploying to Vercel, connecting a domain, and flipping `mock: false`.
 
+### Uploading your audio
+
+Stage your files in `_uploads/`, mirroring the exact key paths from `R2-FILE-MANIFEST.md`, then:
+
+```
+npm run upload:check    # dry run — lists what is missing from R2, writes nothing
+npm run upload          # actually upload
+```
+
+`scripts/upload-to-r2.mjs` reads every object key straight from `data/releases.json`, so what you
+upload can never drift from what the site asks for — R2 keys are case-sensitive, and a mismatch is
+the single most common cause of "track unavailable" on a live site. It refuses to run if the catalog
+and your staging folder disagree, rather than uploading a partial catalog.
+
+It also handles the things the Cloudflare dashboard cannot: files over the dashboard's **300 MB**
+limit (it switches to multipart automatically, which whole-release WAV bundles always need), and
+unreliable connections — objects already in R2 are skipped so an interrupted run resumes where it
+stopped, and each upload retries on a fresh connection with backoff. On a slow link, large bundles
+can genuinely need several attempts:
+
+```
+UPLOAD_CONCURRENCY=1 UPLOAD_QUEUE_SIZE=1 UPLOAD_ATTEMPTS=8 npm run upload
+```
+
+Uploading needs a **write-scoped** R2 token — the site's own token is read-only by design. Put the
+write credentials in `.env.upload` (git-ignored) as `R2_UPLOAD_ACCESS_KEY_ID` /
+`R2_UPLOAD_SECRET_ACCESS_KEY`, and delete that token in Cloudflare once you are done. See SETUP.md.
+
 ## Tests
 
 A lightweight suite covers the security-critical logic — price-model enforcement, the streaming-key
@@ -105,4 +133,6 @@ Run it after changing pricing, the token format, or your catalog to catch regres
 - **SETUP.md** — going-live guide (Stripe, R2, env vars, uploads, deploy, theming)
 - **BUILD-SPEC.md** — internal architecture spec: data schemas, CSS class contract, API endpoints
 - **R2-FILE-MANIFEST.md** — generated upload checklist (`npm run manifest`)
+- **scripts/** — `generate-manifest.mjs` builds that checklist; `upload-to-r2.mjs` bulk-uploads your
+  staged audio to R2 using keys read from `releases.json` (`npm run upload`)
 - **test/** — unit suite (`npm test`): pricing, stream-key allowlist, download tokens, safe links
