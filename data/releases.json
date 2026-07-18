@@ -20,11 +20,11 @@
       "credits": "Demo release — replace with your own credits (composer, mixing, mastering).",
       "notes": "Demo content. This release shows the \"$5 or more\" (nyp-floor) price model.",
       "tracks": [
-        { "n": 1, "title": "Dawn Chorus", "duration": "4:12", "streamKey": "stream/first-light-ep/01-dawn-chorus.mp3", "downloadKeys": { "wav": "downloads/first-light-ep/01-dawn-chorus.wav", "mp3": "downloads/first-light-ep/01-dawn-chorus.mp3" } },
-        { "n": 2, "title": "Parallel Lines", "duration": "5:03", "streamKey": "stream/first-light-ep/02-parallel-lines.mp3", "downloadKeys": { "wav": "downloads/first-light-ep/02-parallel-lines.wav", "mp3": "downloads/first-light-ep/02-parallel-lines.mp3" } },
-        { "n": 3, "title": "Afterglow", "duration": "6:20", "streamKey": "stream/first-light-ep/03-afterglow.mp3", "downloadKeys": { "wav": "downloads/first-light-ep/03-afterglow.wav", "mp3": "downloads/first-light-ep/03-afterglow.mp3" } }
+        { "n": 1, "title": "Dawn Chorus", "duration": "4:12", "streamKey": "stream/First-Light-EP/Static_Bloom-Dawn_Chorus.mp3", "downloadKeys": { "wav": "downloads/First-Light-EP/Static_Bloom-Dawn_Chorus.wav", "mp3": "downloads/First-Light-EP/Static_Bloom-Dawn_Chorus.mp3" } },
+        { "n": 2, "title": "Parallel Lines", "duration": "5:03", "streamKey": "stream/First-Light-EP/Static_Bloom-Parallel_Lines.mp3", "downloadKeys": { "wav": "downloads/First-Light-EP/Static_Bloom-Parallel_Lines.wav", "mp3": "downloads/First-Light-EP/Static_Bloom-Parallel_Lines.mp3" } },
+        { "n": 3, "title": "Afterglow", "duration": "6:20", "streamKey": "stream/First-Light-EP/Static_Bloom-Afterglow.mp3", "downloadKeys": { "wav": "downloads/First-Light-EP/Static_Bloom-Afterglow.wav", "mp3": "downloads/First-Light-EP/Static_Bloom-Afterglow.mp3" } }
       ],
-      "downloadBundle": { "wav": "downloads/first-light-ep/first-light-ep-wav.zip", "mp3": "downloads/first-light-ep/first-light-ep-mp3.zip" }
+      "downloadBundle": { "wav": "downloads/First-Light-EP/First-Light-EP-WAV.zip", "mp3": "downloads/First-Light-EP/First-Light-EP-MP3.zip" }
     },
     {
       "id": "night-signals",
@@ -39,10 +39,10 @@
       "credits": "Demo release — replace with your own credits.",
       "notes": "Demo content. This release shows the name-your-price (nyp) model — $0 / free download allowed.",
       "tracks": [
-        { "n": 1, "title": "Transmission", "duration": "3:48", "streamKey": "stream/night-signals/01-transmission.mp3", "downloadKeys": { "wav": "downloads/night-signals/01-transmission.wav", "mp3": "downloads/night-signals/01-transmission.mp3" } },
-        { "n": 2, "title": "Static Drift", "duration": "5:15", "streamKey": "stream/night-signals/02-static-drift.mp3", "downloadKeys": { "wav": "downloads/night-signals/02-static-drift.wav", "mp3": "downloads/night-signals/02-static-drift.mp3" } }
+        { "n": 1, "title": "Transmission", "duration": "3:48", "streamKey": "stream/Night-Signals/Static_Bloom-Transmission.mp3", "downloadKeys": { "wav": "downloads/Night-Signals/Static_Bloom-Transmission.wav", "mp3": "downloads/Night-Signals/Static_Bloom-Transmission.mp3" } },
+        { "n": 2, "title": "Static Drift", "duration": "5:15", "streamKey": "stream/Night-Signals/Static_Bloom-Static_Drift.mp3", "downloadKeys": { "wav": "downloads/Night-Signals/Static_Bloom-Static_Drift.wav", "mp3": "downloads/Night-Signals/Static_Bloom-Static_Drift.mp3" } }
       ],
-      "downloadBundle": { "wav": "downloads/night-signals/night-signals-wav.zip", "mp3": "downloads/night-signals/night-signals-mp3.zip" }
+      "downloadBundle": { "wav": "downloads/Night-Signals/Night-Signals-WAV.zip", "mp3": "downloads/Night-Signals/Night-Signals-MP3.zip" }
     }
   ],
   "mixes": [

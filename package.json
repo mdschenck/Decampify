@@ -9,6 +9,7 @@
     "start": "vercel dev",
     "test": "node --test",
     "manifest": "node scripts/generate-manifest.mjs",
+    "manifest:check": "node scripts/check-staging.mjs",
     "upload:check": "node --env-file=.env --env-file-if-exists=.env.upload scripts/upload-to-r2.mjs",
     "upload": "node --env-file=.env --env-file-if-exists=.env.upload scripts/upload-to-r2.mjs --go"
   },

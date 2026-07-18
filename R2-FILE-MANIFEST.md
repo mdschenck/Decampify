@@ -7,41 +7,41 @@
 ## Release: First Light EP (`first-light-ep`)
 
 ### Streaming MP3s (free player — 192 kbps CBR, 44.1 kHz, full length)
-- [ ] `stream/first-light-ep/01-dawn-chorus.mp3`
-- [ ] `stream/first-light-ep/02-parallel-lines.mp3`
-- [ ] `stream/first-light-ep/03-afterglow.mp3`
+- [ ] `stream/First-Light-EP/Static_Bloom-Dawn_Chorus.mp3`
+- [ ] `stream/First-Light-EP/Static_Bloom-Parallel_Lines.mp3`
+- [ ] `stream/First-Light-EP/Static_Bloom-Afterglow.mp3`
 
 ### Download WAVs (sold — full-quality masters)
-- [ ] `downloads/first-light-ep/01-dawn-chorus.wav`
-- [ ] `downloads/first-light-ep/02-parallel-lines.wav`
-- [ ] `downloads/first-light-ep/03-afterglow.wav`
+- [ ] `downloads/First-Light-EP/Static_Bloom-Dawn_Chorus.wav`
+- [ ] `downloads/First-Light-EP/Static_Bloom-Parallel_Lines.wav`
+- [ ] `downloads/First-Light-EP/Static_Bloom-Afterglow.wav`
 
 ### Download MP3s (sold — 320 kbps CBR)
-- [ ] `downloads/first-light-ep/01-dawn-chorus.mp3`
-- [ ] `downloads/first-light-ep/02-parallel-lines.mp3`
-- [ ] `downloads/first-light-ep/03-afterglow.mp3`
+- [ ] `downloads/First-Light-EP/Static_Bloom-Dawn_Chorus.mp3`
+- [ ] `downloads/First-Light-EP/Static_Bloom-Parallel_Lines.mp3`
+- [ ] `downloads/First-Light-EP/Static_Bloom-Afterglow.mp3`
 
 ### Bundle zips (whole release, per format)
-- [ ] `downloads/first-light-ep/first-light-ep-wav.zip`
-- [ ] `downloads/first-light-ep/first-light-ep-mp3.zip`
+- [ ] `downloads/First-Light-EP/First-Light-EP-WAV.zip`
+- [ ] `downloads/First-Light-EP/First-Light-EP-MP3.zip`
 
 ## Release: Night Signals (`night-signals`)
 
 ### Streaming MP3s (free player — 192 kbps CBR, 44.1 kHz, full length)
-- [ ] `stream/night-signals/01-transmission.mp3`
-- [ ] `stream/night-signals/02-static-drift.mp3`
+- [ ] `stream/Night-Signals/Static_Bloom-Transmission.mp3`
+- [ ] `stream/Night-Signals/Static_Bloom-Static_Drift.mp3`
 
 ### Download WAVs (sold — full-quality masters)
-- [ ] `downloads/night-signals/01-transmission.wav`
-- [ ] `downloads/night-signals/02-static-drift.wav`
+- [ ] `downloads/Night-Signals/Static_Bloom-Transmission.wav`
+- [ ] `downloads/Night-Signals/Static_Bloom-Static_Drift.wav`
 
 ### Download MP3s (sold — 320 kbps CBR)
-- [ ] `downloads/night-signals/01-transmission.mp3`
-- [ ] `downloads/night-signals/02-static-drift.mp3`
+- [ ] `downloads/Night-Signals/Static_Bloom-Transmission.mp3`
+- [ ] `downloads/Night-Signals/Static_Bloom-Static_Drift.mp3`
 
 ### Bundle zips (whole release, per format)
-- [ ] `downloads/night-signals/night-signals-wav.zip`
-- [ ] `downloads/night-signals/night-signals-mp3.zip`
+- [ ] `downloads/Night-Signals/Night-Signals-WAV.zip`
+- [ ] `downloads/Night-Signals/Night-Signals-MP3.zip`
 
 ## Mixes (streaming only)
 

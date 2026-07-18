@@ -123,16 +123,48 @@ zips). Tick items off as you upload so nothing is missed. Re-run it any time the
 ### Naming convention (must match `releases.json` exactly)
 
 ```
-stream/<release-id>/01-track-slug.mp3         ← free streaming copies (mp3, one per track)
-stream/mixes/<mix-id>.mp3                     ← DJ mixes for the Radio stations
-downloads/<release-id>/01-track-slug.wav      ← purchased downloads, WAV
-downloads/<release-id>/01-track-slug.mp3      ← purchased downloads, MP3
-downloads/<release-id>/<release-id>-wav.zip   ← whole-release bundle, WAV
-downloads/<release-id>/<release-id>-mp3.zip   ← whole-release bundle, MP3
+stream/<Album-Dir>/<Artist_Name>-<Song_Title>.mp3      ← free streaming copies (one per track)
+stream/mixes/<mix-id>.mp3                              ← DJ mixes for the Radio stations
+downloads/<Album-Dir>/<Artist_Name>-<Song_Title>.wav   ← purchased downloads, WAV
+downloads/<Album-Dir>/<Artist_Name>-<Song_Title>.mp3   ← purchased downloads, MP3
+downloads/<Album-Dir>/<Album-Dir>-WAV.zip              ← whole-release bundle, WAV
+downloads/<Album-Dir>/<Album-Dir>-MP3.zip              ← whole-release bundle, MP3
 ```
 
-`<release-id>`/`<mix-id>` are the `id` fields in `releases.json`; the numbered track slug comes straight
-from each track's `streamKey`/`downloadKeys`.
+Building the names:
+- **`<Album-Dir>`** — the release title with spaces → `-`, proper case kept: `First Light EP` → `First-Light-EP`
+- **Artist and title** — spaces → `_`, proper case kept, joined with `-`:
+  `Static Bloom` + `Dawn Chorus` → `Static_Bloom-Dawn_Chorus`
+- **Keep** letters, digits, `_`, `-`, `&`, `(`, `)`. **Drop** `? ! . : ,` —
+  `Are We There? (Reprise)` → `Are_We_There_(Reprise)`, `Afterglow (feat. Nova)` → `Afterglow_(feat_Nova)`
+- **Guest artists** — a track titled `Guest Name - Title` uses the guest as that track's artist:
+  `Night Owl - Static Drift` → `Night_Owl-Static_Drift`
+- **DJ mixes** keep their lowercase `<mix-id>` slug — they're stream-only and never sold, so the
+  artist/title convention doesn't apply
+
+Using a different convention is fine — nothing in the code requires this one. What is **not** optional is
+that your files, `data/releases.json`, and the objects in your R2 bucket all agree **exactly**.
+
+> ⚠️ **Names must match the manifest exactly — object names *and* release directory names.**
+> R2 keys are **case-sensitive** and nothing in the stack does fuzzy matching. `downloads/My-EP/…` and
+> `downloads/my-ep/…` are two different locations, and a site asking for `Dawn_Chorus.wav` will never
+> find `dawn-chorus.wav`.
+>
+> Get this wrong and it fails in a way that is genuinely hard to debug: signing a download URL **never
+> checks that the object exists**, so a mismatched name still yields a perfectly valid signed URL. The
+> browser fetches it, R2 returns 404, and the player just reports *"track unavailable"* — with nothing in
+> your logs pointing at the real cause.
+
+### Check your filenames before uploading
+
+```
+npm run manifest:check
+```
+
+Compares your staging folder against the catalog and reports **MISSING** (a catalog key with no file
+staged), **ORPHAN** (a staged file matching no catalog key — nearly always a typo, and it suggests the
+likely rename), and any keys that depart from the convention above. Run it until it comes back clean.
+The `decampify-onboard` skill can also walk through this and rename the files for you.
 
 ### Recommended formats / bitrate
 
@@ -148,12 +180,19 @@ from each track's `streamKey`/`downloadKeys`.
 
 ### Two ways to upload
 
-1. **Cloudflare dashboard** — R2 → your bucket → **Upload** → drag files. Type the key prefix
-   (e.g. `stream/first-light-ep/`) when uploading to build the folder structure.
-2. **An S3 tool** pointed at the R2 endpoint (`https://<account-id>.r2.cloudflarestorage.com`) with your
+1. **`npm run upload` (recommended)** — stage your files in `_uploads/` mirroring the key paths, then
+   `npm run upload:check` (dry run) followed by `npm run upload`. It reads every key straight from
+   `data/releases.json`, so what you upload **cannot** drift from what the site asks for — which removes
+   the whole category of naming bugs described above. It also handles files over the dashboard's 300 MB
+   limit, skips anything already uploaded, and retries on flaky connections. Needs a write-scoped R2
+   token in `.env.upload` — see `.env.upload.example`.
+2. **Cloudflare dashboard** — R2 → your bucket → **Upload** → drag files. Type the key prefix
+   (e.g. `stream/First-Light-EP/`) when uploading to build the folder structure. Capped at **300 MB per
+   file**, so whole-release WAV bundles usually can't go this way. Type prefixes carefully — a typo here
+   is exactly the silent-404 failure described above.
+3. **An S3 tool** pointed at the R2 endpoint (`https://<account-id>.r2.cloudflarestorage.com`) with your
    R2 access key/secret — **rclone**, **Cyberduck**, or the **AWS CLI**
-   (`aws s3 cp <folder> s3://<bucket>/downloads/<release-id>/ --recursive --endpoint-url <R2 endpoint>`).
-   Best for bulk uploads.
+   (`aws s3 cp <folder> s3://<bucket>/downloads/<Album-Dir>/ --recursive --endpoint-url <R2 endpoint>`).
 
 **Security:** `stream/` files back the free player; `downloads/` files are only ever handed out via a
 short-lived signed URL after a valid purchase or free-download token. The API **refuses to sign any key

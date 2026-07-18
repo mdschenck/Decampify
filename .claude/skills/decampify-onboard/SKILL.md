@@ -29,12 +29,31 @@ can't be found, keep the template placeholder or ask the user.
    - free → `priceModel: "free"`, `priceFloor: 0`
 4. **Show the user a summary** (releases + prices + track counts) and confirm before writing.
 5. Write `data/releases.json` using the **exact existing schema** (open the current file and match every
-   field name). Generate the storage keys with the template's conventions:
-   - `art`: `/assets/img/covers/<id>.jpg`
-   - each track `streamKey`: `stream/<id>/<NN-track-slug>.mp3`
-   - each track `downloadKeys`: `downloads/<id>/<NN-track-slug>.wav` and `.mp3`
-   - `downloadBundle`: `downloads/<id>/<id>-wav.zip` and `<id>-mp3.zip`
-   Replace the demo releases entirely.
+   field name). Generate the storage keys with the template's naming convention — the same one
+   documented in README "Audio file naming", which the user's files will have to match exactly:
+
+   | Field | Pattern | Example |
+   |---|---|---|
+   | `art` | `/assets/img/covers/<id>.jpg` | `/assets/img/covers/first-light-ep.jpg` |
+   | `streamKey` | `stream/<Album-Dir>/<Artist>-<Title>.mp3` | `stream/First-Light-EP/Static_Bloom-Dawn_Chorus.mp3` |
+   | `downloadKeys.wav` | `downloads/<Album-Dir>/<Artist>-<Title>.wav` | `downloads/First-Light-EP/Static_Bloom-Dawn_Chorus.wav` |
+   | `downloadKeys.mp3` | same with `.mp3` | |
+   | `downloadBundle` | `downloads/<Album-Dir>/<Album-Dir>-WAV.zip` / `-MP3.zip` | `downloads/First-Light-EP/First-Light-EP-WAV.zip` |
+   | mix `streamKey` | `stream/mixes/<lowercase-slug>.mp3` | `stream/mixes/summer-2026.mp3` |
+
+   Building `<Album-Dir>` and the filename:
+   - **Album directory** — release title, spaces → `-`, keep proper case: `First Light EP` → `First-Light-EP`
+   - **Artist / title** — spaces → `_`, keep proper case, joined by `-`: `Dawn Chorus` → `Static_Bloom-Dawn_Chorus`
+   - **Keep** letters, digits, `_`, `-`, `&`, `(`, `)`. **Drop** `? ! . : ,` —
+     `Are We There? (Reprise)` → `Are_We_There_(Reprise)`, `Afterglow (feat. Nova)` → `Afterglow_(feat_Nova)`
+   - **Guest artists** — if a track title reads `Guest Name - Title`, use the guest as the artist for that
+     track: `Night Owl - Static Drift` → `Night_Owl-Static_Drift`
+   - **DJ mixes keep their lowercase slug** — stream-only, never sold, so the convention doesn't apply
+   - If the release title makes an awkward directory (e.g. `Remixes / Rarities (Collected)`),
+     propose a clean short form (`Remixes-Collected`) and **confirm it with the user** before writing
+
+   Replace the demo releases entirely. After writing, run `npm run manifest:check` — it validates the keys
+   against the convention and will flag anything malformed.
 
 ## Step 2 — Download the cover art
 For each release, download its Bandcamp cover into `assets/img/covers/<id>.jpg`. Bandcamp art URLs end in
@@ -91,6 +110,37 @@ available, otherwise leave `image: ""` (the page auto-generates a placeholder). 
 ## Step 6 — Generate the file-upload manifest
 Run `npm run manifest` (which runs `scripts/generate-manifest.mjs`) to regenerate **`R2-FILE-MANIFEST.md`**
 from the updated `releases.json`. This is the user's checklist of every audio file to upload to R2.
+
+## Step 6b — Offer to check and fix the staged filenames
+
+**Why this matters — explain it to the user in one line:** a filename that doesn't match `releases.json`
+produces a valid signed URL for an object that isn't there, so the track fails with a bare
+*"track unavailable"* and nothing in the logs. Catching it now is much cheaper than debugging it live.
+
+1. Ask whether they've already staged their audio (default `_uploads/`, or wherever they keep it).
+   If they haven't encoded anything yet, skip this step and mention they can run it later.
+2. Run **`npm run manifest:check`**. It reports:
+   - **MISSING** — catalog keys with no staged file
+   - **ORPHAN** — staged files matching no catalog key, each with a suggested rename
+   - **CONVENTION** — keys departing from the documented naming convention
+3. Interpret the result for them rather than pasting raw output:
+   - **All matched** → say so plainly; they're ready to upload.
+   - **Only MISSING** → those tracks aren't encoded yet. List them; nothing to rename.
+   - **ORPHAN + MISSING in matching numbers** → almost always misnamed files, not absent ones. This is
+     the case worth fixing, so go to step 4.
+4. **Offer to rename the staged files.** Build the mapping from the script's suggestions, then:
+   - Show the **complete proposed rename table** (`old name  ->  new name`), grouped by folder.
+   - Flag any orphan the script could **not** confidently pair, and ask the user which track it is —
+     never guess a pairing the script rejected.
+   - **Get explicit confirmation before renaming anything.** These are the user's master audio files.
+   - Rename only inside the staging folder. **Never** rename to a path that already exists, and never
+     touch `data/releases.json` to make it fit the files — the catalog is the source of truth, since it
+     is what the deployed site will ask R2 for.
+5. Re-run `npm run manifest:check` afterwards to confirm it comes back clean.
+
+**If the user is deliberately using a different naming convention**, that's fine — say so, and make the
+catalog match their files rather than the reverse: edit the keys in `data/releases.json`, re-run
+`npm run manifest`, and re-check. The convention warnings are advisory; the MISSING/ORPHAN mismatch is not.
 
 ## Step 7 — Write a personalized launch checklist
 Create **`LAUNCH-CHECKLIST.md`** covering the **full path from this cloned template to a live site.** Keep

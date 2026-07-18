@@ -89,14 +89,68 @@ Prefer to do it by hand? Everything the skill does is documented below and in **
 the Cloudflare R2 bucket, environment variables, uploading audio (`npm run manifest` generates
 your upload checklist), deploying to Vercel, connecting a domain, and flipping `mock: false`.
 
+### Audio file naming
+
+> **Your filenames must match `data/releases.json` exactly.** This is the single most common reason a
+> track won't play on a live site, and it fails silently — see the warning under "Uploading your audio".
+
+The default convention, used everywhere the onboarding skill generates keys:
+
+```
+stream/<Album-Dir>/<Artist_Name>-<Song_Title>.mp3        free streaming preview
+downloads/<Album-Dir>/<Artist_Name>-<Song_Title>.wav     sold master
+downloads/<Album-Dir>/<Artist_Name>-<Song_Title>.mp3     sold 320 kbps
+downloads/<Album-Dir>/<Album-Dir>-WAV.zip                whole-release bundles
+downloads/<Album-Dir>/<Album-Dir>-MP3.zip
+stream/mixes/<lowercase-slug>.mp3                        DJ mixes (exempt, see below)
+```
+
+**Rules**
+
+| Part | Rule | Example |
+|---|---|---|
+| Song title | Spaces → `_`, keep proper case | `Dawn Chorus` → `Dawn_Chorus` |
+| Artist | Spaces → `_`, then `-` before the title | `Static Bloom` → `Static_Bloom-Dawn_Chorus` |
+| Album directory | Spaces → `-`, keep proper case | `First Light EP` → `First-Light-EP` |
+| Kept characters | letters, digits, `_`, `-`, `&`, `(`, `)` | `Salt & Static` → `Salt_&_Static` |
+| Dropped characters | `? ! . : ,` | `Are We There? (Reprise)` → `Are_We_There_(Reprise)` |
+| Guest artists | A track titled `Guest Name - Title` uses the guest as the artist | `Night Owl - Static Drift` → `Night_Owl-Static_Drift` |
+| DJ mixes | Keep their lowercase slug — stream-only, never sold, so the convention doesn't apply | `stream/mixes/summer-2026.mp3` |
+
+**Using a different convention is fine** — nothing in the code requires this one. What is *not* optional
+is that your files, `data/releases.json`, and the objects in your R2 bucket all agree exactly.
+
+Check your staging folder against the catalog before you upload:
+
+```
+npm run manifest:check
+```
+
+It reports three things: catalog keys with no file staged (**MISSING**), staged files matching no catalog
+key (**ORPHAN** — almost always a typo, and it suggests the likely rename), and any keys that depart from
+the convention above. The onboarding skill can also review and rename your staged files for you.
+
 ### Uploading your audio
 
 Stage your files in `_uploads/`, mirroring the exact key paths from `R2-FILE-MANIFEST.md`, then:
 
 ```
+npm run manifest:check  # verify filenames match the catalog before uploading
 npm run upload:check    # dry run — lists what is missing from R2, writes nothing
 npm run upload          # actually upload
 ```
+
+> **Names must match the manifest exactly — object names *and* release directory names.**
+> R2 keys are **case-sensitive** and there is no fuzzy matching anywhere in the stack:
+> `downloads/My-EP/…` and `downloads/my-ep/…` are two entirely different locations, and
+> `Dawn_Chorus.wav` will not be found by a site asking for `dawn-chorus.wav`.
+>
+> This fails in a way that is genuinely hard to debug, so it is worth being pedantic about: signing a
+> URL **never checks that the object exists**. A mismatched name still produces a perfectly valid
+> signed URL, the browser fetches it, R2 returns 404, and the player just says *"track unavailable"* —
+> with nothing in your API logs to explain why. `npm run upload` avoids this entirely by reading keys
+> straight from `data/releases.json`, which is why it is the recommended path. If you upload by hand
+> through the dashboard instead, type the key prefixes carefully.
 
 `scripts/upload-to-r2.mjs` reads every object key straight from `data/releases.json`, so what you
 upload can never drift from what the site asks for — R2 keys are case-sensitive, and a mismatch is
@@ -135,6 +189,7 @@ Run it after changing pricing, the token format, or your catalog to catch regres
 - **SETUP.md** — going-live guide (Stripe, R2, env vars, uploads, deploy, theming)
 - **BUILD-SPEC.md** — internal architecture spec: data schemas, CSS class contract, API endpoints
 - **R2-FILE-MANIFEST.md** — generated upload checklist (`npm run manifest`)
-- **scripts/** — `generate-manifest.mjs` builds that checklist; `upload-to-r2.mjs` bulk-uploads your
-  staged audio to R2 using keys read from `releases.json` (`npm run upload`)
+- **scripts/** — `generate-manifest.mjs` builds that checklist (`npm run manifest`);
+  `check-staging.mjs` verifies your staged filenames match the catalog (`npm run manifest:check`);
+  `upload-to-r2.mjs` bulk-uploads staged audio using keys read from `releases.json` (`npm run upload`)
 - **test/** — unit suite (`npm test`): pricing, stream-key allowlist, download tokens, safe links
