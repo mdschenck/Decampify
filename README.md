@@ -55,7 +55,23 @@ buy flow. No Stripe, no R2, no env vars needed.
 
 ---
 
-## Make it yours
+## Onboard your own music (with a coding agent)
+
+The fastest way to make this site yours. In a coding agent that supports Claude Code skills:
+
+1. Open this repo in your coding agent (e.g. **Claude Code**).
+2. Run the **`decampify-onboard`** skill — type `/decampify-onboard`, or just ask the agent to
+   *"run the Decampify onboarding"* / *"import my music"*.
+3. Give it your **artist page URL** when it asks.
+
+It imports your catalog, track lists, prices, and cover art; pulls in your bio and socials; optionally
+adopts your page's colors and fonts; sets up (or removes) your EPK and press pages; generates your
+file-upload checklist (`R2-FILE-MANIFEST.md`); and writes you a personalized `LAUNCH-CHECKLIST.md`. When
+it finishes, the site runs locally in mock mode with **your** content.
+
+Prefer to do it by hand? Everything the skill does is documented below and in **[`SETUP.md`](SETUP.md)**.
+
+## Make it yours (by hand)
 
 1. **Content** — edit the three JSON files in `data/`:
    - `releases.json` — artist info + every release/track/mix (see BUILD-SPEC.md for the schema)
