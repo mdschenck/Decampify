@@ -89,8 +89,20 @@ Prefer to do it by hand? Everything the skill does is documented below and in **
 the Cloudflare R2 bucket, environment variables, uploading audio (`npm run manifest` generates
 your upload checklist), deploying to Vercel, connecting a domain, and flipping `mock: false`.
 
+## Tests
+
+A lightweight suite covers the security-critical logic — price-model enforcement, the streaming-key
+allowlist, HMAC download-token signing/verification, and URL sanitization. No dependencies to install:
+
+```
+npm test        # runs node --test
+```
+
+Run it after changing pricing, the token format, or your catalog to catch regressions.
+
 ## Docs
 
 - **SETUP.md** — going-live guide (Stripe, R2, env vars, uploads, deploy, theming)
 - **BUILD-SPEC.md** — internal architecture spec: data schemas, CSS class contract, API endpoints
 - **R2-FILE-MANIFEST.md** — generated upload checklist (`npm run manifest`)
+- **test/** — unit suite (`npm test`): pricing, stream-key allowlist, download tokens, safe links
