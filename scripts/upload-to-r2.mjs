@@ -108,14 +108,28 @@ function collectKeys() {
   return keys;
 }
 
-/** Present in R2 at the same byte size? Then there's nothing to do. */
+/** Present in R2 at the same byte size? Then there's nothing to do.
+ *
+ * Only a genuine 404 means "not uploaded yet". Any other failure — expired or
+ * revoked token, wrong bucket, network — means we simply cannot tell, and must
+ * not guess "missing": that would report a full bucket as empty and invite a
+ * pointless multi-GB re-upload. Bail out loudly instead. */
 async function alreadyUploaded(key, size) {
   if (FORCE) return false;
   try {
     const head = await client.send(new HeadObjectCommand({ Bucket: BUCKET, Key: key }));
     return head.ContentLength === size;
-  } catch {
-    return false; // 404 (or no permission to head) -> attempt the upload
+  } catch (err) {
+    const status = err?.$metadata?.httpStatusCode;
+    if (status === 404 || err?.name === "NotFound") return false; // genuinely absent
+    console.error(`\nCannot read the bucket — aborting rather than guessing what is missing.`);
+    console.error(`  HEAD ${key}`);
+    console.error(`  ${err?.name || "Error"}: ${err?.message || err}`);
+    if (status === 401 || status === 403) {
+      console.error(`\n  That is an auth failure. Your R2 upload token is probably expired, revoked,`);
+      console.error(`  or missing the Object Read permission. See SETUP.md for how to mint a new one.`);
+    }
+    process.exit(1);
   }
 }
 
